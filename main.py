@@ -38,6 +38,13 @@ class Block():
         data = "Transaction " + str(index)
         return Block(index, timestamp, data, previoushash)
 
+    def sameblock(self, b1):
+        if self.index==b1.index and self.hash==b1.hash and self.timestamp==b1.timestamp and self.data==b1.data and self.previoushash==b1.previoushash :
+            ok=1
+        else:
+            ok=0
+        return ok
+
 #initializam blockchain-ul ca o lista de blocuri pornind de la primul bloc
 blockchain=[Block.genesisblock()]
 #consideram primul bloc drept bloc precedent pentru urmatorul
@@ -67,3 +74,16 @@ for i in range(0,3):
     print("Previous Block Hash:",blocnou.previoushash)
     print("data:", blocnou.data)
     print("\n")
+
+b2=blockchain.copy()
+
+def verifynotchanged(blockchain1, blockchain2):
+    if len(blockchain1)!=len(blockchain2):
+        return False
+    else:
+        for i in range (0, len(blockchain1)):
+            if Block.sameblock(blockchain1[i], blockchain2[i])==0:
+                return False
+        return True
+
+print(verifynotchanged(blockchain, b2))
